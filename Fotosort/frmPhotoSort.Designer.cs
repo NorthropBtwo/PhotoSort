@@ -79,7 +79,6 @@
             this.radSort.Name = "radSort";
             this.radSort.Size = new System.Drawing.Size(183, 21);
             this.radSort.TabIndex = 0;
-            this.radSort.TabStop = true;
             this.radSort.Text = "Sort photo by time taken";
             this.radSort.UseVisualStyleBackColor = true;
             // 
@@ -120,7 +119,7 @@
             this.txtPrefix.Margin = new System.Windows.Forms.Padding(4);
             this.txtPrefix.Name = "txtPrefix";
             this.txtPrefix.Size = new System.Drawing.Size(185, 22);
-            this.txtPrefix.TabIndex = 4;
+            this.txtPrefix.TabIndex = 1;
             this.txtPrefix.Text = "Holiday";
             // 
             // txtStartIndex
@@ -129,7 +128,7 @@
             this.txtStartIndex.Margin = new System.Windows.Forms.Padding(4);
             this.txtStartIndex.Name = "txtStartIndex";
             this.txtStartIndex.Size = new System.Drawing.Size(124, 22);
-            this.txtStartIndex.TabIndex = 5;
+            this.txtStartIndex.TabIndex = 2;
             this.txtStartIndex.Text = "0000";
             // 
             // txtFiler
@@ -138,7 +137,7 @@
             this.txtFiler.Margin = new System.Windows.Forms.Padding(4);
             this.txtFiler.Name = "txtFiler";
             this.txtFiler.Size = new System.Drawing.Size(185, 22);
-            this.txtFiler.TabIndex = 6;
+            this.txtFiler.TabIndex = 3;
             this.txtFiler.Text = ".jpg|.jpeg";
             // 
             // progBarTask
@@ -155,7 +154,7 @@
             this.cmdstart.Margin = new System.Windows.Forms.Padding(4);
             this.cmdstart.Name = "cmdstart";
             this.cmdstart.Size = new System.Drawing.Size(221, 42);
-            this.cmdstart.TabIndex = 8;
+            this.cmdstart.TabIndex = 16;
             this.cmdstart.Text = "start";
             this.cmdstart.UseVisualStyleBackColor = true;
             this.cmdstart.Click += new System.EventHandler(this.cmdstart_Click);
@@ -166,7 +165,7 @@
             this.cmdstart1.Margin = new System.Windows.Forms.Padding(4);
             this.cmdstart1.Name = "cmdstart1";
             this.cmdstart1.Size = new System.Drawing.Size(221, 42);
-            this.cmdstart1.TabIndex = 9;
+            this.cmdstart1.TabIndex = 19;
             this.cmdstart1.Text = "start";
             this.cmdstart1.UseVisualStyleBackColor = true;
             this.cmdstart1.Click += new System.EventHandler(this.cmdstart_Click);
@@ -186,7 +185,7 @@
             this.cancel.Margin = new System.Windows.Forms.Padding(4);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(221, 42);
-            this.cancel.TabIndex = 10;
+            this.cancel.TabIndex = 17;
             this.cancel.Text = "cancel";
             this.cancel.UseVisualStyleBackColor = true;
             this.cancel.Click += new System.EventHandler(this.cancel_Click);
@@ -198,7 +197,7 @@
             this.cancel1.Margin = new System.Windows.Forms.Padding(4);
             this.cancel1.Name = "cancel1";
             this.cancel1.Size = new System.Drawing.Size(221, 42);
-            this.cancel1.TabIndex = 11;
+            this.cancel1.TabIndex = 18;
             this.cancel1.Text = "cancel";
             this.cancel1.UseVisualStyleBackColor = true;
             this.cancel1.Click += new System.EventHandler(this.cancel_Click);
@@ -210,8 +209,7 @@
             this.radAddConstantTime.Margin = new System.Windows.Forms.Padding(4);
             this.radAddConstantTime.Name = "radAddConstantTime";
             this.radAddConstantTime.Size = new System.Drawing.Size(283, 21);
-            this.radAddConstantTime.TabIndex = 12;
-            this.radAddConstantTime.TabStop = true;
+            this.radAddConstantTime.TabIndex = 4;
             this.radAddConstantTime.Text = "Add constant time span to captured time";
             this.radAddConstantTime.UseVisualStyleBackColor = true;
             // 
@@ -221,7 +219,7 @@
             this.txtAddConstant_Y.Margin = new System.Windows.Forms.Padding(4);
             this.txtAddConstant_Y.Name = "txtAddConstant_Y";
             this.txtAddConstant_Y.Size = new System.Drawing.Size(32, 22);
-            this.txtAddConstant_Y.TabIndex = 13;
+            this.txtAddConstant_Y.TabIndex = 5;
             this.txtAddConstant_Y.Text = "0";
             // 
             // txtAddConstant_Mon
@@ -230,7 +228,7 @@
             this.txtAddConstant_Mon.Margin = new System.Windows.Forms.Padding(4);
             this.txtAddConstant_Mon.Name = "txtAddConstant_Mon";
             this.txtAddConstant_Mon.Size = new System.Drawing.Size(32, 22);
-            this.txtAddConstant_Mon.TabIndex = 14;
+            this.txtAddConstant_Mon.TabIndex = 6;
             this.txtAddConstant_Mon.Text = "0";
             // 
             // txtAddConstant_D
@@ -239,7 +237,7 @@
             this.txtAddConstant_D.Margin = new System.Windows.Forms.Padding(4);
             this.txtAddConstant_D.Name = "txtAddConstant_D";
             this.txtAddConstant_D.Size = new System.Drawing.Size(32, 22);
-            this.txtAddConstant_D.TabIndex = 15;
+            this.txtAddConstant_D.TabIndex = 7;
             this.txtAddConstant_D.Text = "0";
             // 
             // txtAddConstant_h
@@ -248,7 +246,7 @@
             this.txtAddConstant_h.Margin = new System.Windows.Forms.Padding(4);
             this.txtAddConstant_h.Name = "txtAddConstant_h";
             this.txtAddConstant_h.Size = new System.Drawing.Size(32, 22);
-            this.txtAddConstant_h.TabIndex = 16;
+            this.txtAddConstant_h.TabIndex = 8;
             this.txtAddConstant_h.Text = "0";
             // 
             // txtAddConstant_min
@@ -257,7 +255,7 @@
             this.txtAddConstant_min.Margin = new System.Windows.Forms.Padding(4);
             this.txtAddConstant_min.Name = "txtAddConstant_min";
             this.txtAddConstant_min.Size = new System.Drawing.Size(32, 22);
-            this.txtAddConstant_min.TabIndex = 17;
+            this.txtAddConstant_min.TabIndex = 9;
             this.txtAddConstant_min.Text = "0";
             // 
             // txtAddConstant_s
@@ -266,7 +264,7 @@
             this.txtAddConstant_s.Margin = new System.Windows.Forms.Padding(4);
             this.txtAddConstant_s.Name = "txtAddConstant_s";
             this.txtAddConstant_s.Size = new System.Drawing.Size(32, 22);
-            this.txtAddConstant_s.TabIndex = 18;
+            this.txtAddConstant_s.TabIndex = 10;
             this.txtAddConstant_s.Text = "0";
             // 
             // label4
@@ -336,8 +334,7 @@
             this.radKnownImage.Margin = new System.Windows.Forms.Padding(4);
             this.radKnownImage.Name = "radKnownImage";
             this.radKnownImage.Size = new System.Drawing.Size(268, 21);
-            this.radKnownImage.TabIndex = 27;
-            this.radKnownImage.TabStop = true;
+            this.radKnownImage.TabIndex = 12;
             this.radKnownImage.Text = "correct captured time by known image";
             this.radKnownImage.UseVisualStyleBackColor = true;
             // 
@@ -347,7 +344,7 @@
             this.cmdSelectImage.Margin = new System.Windows.Forms.Padding(4);
             this.cmdSelectImage.Name = "cmdSelectImage";
             this.cmdSelectImage.Size = new System.Drawing.Size(114, 29);
-            this.cmdSelectImage.TabIndex = 28;
+            this.cmdSelectImage.TabIndex = 13;
             this.cmdSelectImage.Text = "select image";
             this.cmdSelectImage.UseVisualStyleBackColor = true;
             this.cmdSelectImage.Click += new System.EventHandler(this.cmdSelectImage_Click);
@@ -359,7 +356,7 @@
             this.dateTimePicker1.Location = new System.Drawing.Point(161, 340);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(160, 22);
-            this.dateTimePicker1.TabIndex = 29;
+            this.dateTimePicker1.TabIndex = 14;
             // 
             // label10
             // 
@@ -377,7 +374,7 @@
             this.txtFiler2.Margin = new System.Windows.Forms.Padding(4);
             this.txtFiler2.Name = "txtFiler2";
             this.txtFiler2.Size = new System.Drawing.Size(185, 22);
-            this.txtFiler2.TabIndex = 26;
+            this.txtFiler2.TabIndex = 11;
             this.txtFiler2.Text = ".jpg|.jpeg";
             // 
             // txtFiler3
@@ -386,7 +383,7 @@
             this.txtFiler3.Margin = new System.Windows.Forms.Padding(4);
             this.txtFiler3.Name = "txtFiler3";
             this.txtFiler3.Size = new System.Drawing.Size(185, 22);
-            this.txtFiler3.TabIndex = 31;
+            this.txtFiler3.TabIndex = 15;
             this.txtFiler3.Text = ".jpg|.jpeg";
             // 
             // label11

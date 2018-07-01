@@ -45,6 +45,8 @@ namespace Fotosort
 
 
             openFileDialog1.InitialDirectory = Directory.GetCurrentDirectory();
+
+            radSort.Checked = true;
         }
 
         private void SetSortActive(object sender, EventArgs e)
