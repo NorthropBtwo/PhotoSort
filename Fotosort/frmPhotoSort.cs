@@ -114,7 +114,7 @@ namespace Fotosort
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            progBarTask.Value = e.ProgressPercentage;
+            windows7ProgressBar1.Value = e.ProgressPercentage;
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

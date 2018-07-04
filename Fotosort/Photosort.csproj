@@ -69,6 +69,11 @@
     <Compile Include="PhotoSortMgr.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Win7ProgessBar\COMTypes.cs" />
+    <Compile Include="Win7ProgessBar\Windows7ProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Win7ProgessBar\Windows7Taskbar.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
