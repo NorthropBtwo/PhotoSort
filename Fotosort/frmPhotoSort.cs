@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -47,6 +48,21 @@ namespace Fotosort
             openFileDialog1.InitialDirectory = Directory.GetCurrentDirectory();
 
             radSort.Checked = true;
+
+            InitUpdate();
+        }
+
+        private void InitUpdate()
+        {
+            if( GithubSingleFileUpdater.IsUpToDate())
+            {
+                cmdUpdate.Visible = false;
+            }
+
+            if (File.Exists(oldVersion))
+            {
+                File.Delete(oldVersion);
+            }
         }
 
         private void SetSortActive(object sender, EventArgs e)
@@ -219,6 +235,24 @@ namespace Fotosort
         {
             frmInfo info = new frmInfo();
             info.ShowDialog();
+        }
+
+        string newestVersion = Process.GetCurrentProcess().MainModule.FileName + ".temp";
+        string oldVersion = Process.GetCurrentProcess().MainModule.FileName + ".oldtemp";
+        string curVersion = Process.GetCurrentProcess().MainModule.FileName;
+
+        private void cmdUpdate_Click(object sender, EventArgs e)
+        {   
+            GithubSingleFileUpdater.DownloadReleaseVersion(newestVersion);
+            File.Move(curVersion, oldVersion);
+            File.Move(newestVersion, curVersion);
+
+            if (File.Exists(curVersion))
+            {
+                Process.Start(curVersion);
+            }
+
+            Environment.Exit(0);
         }
     }
 }

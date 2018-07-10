@@ -65,6 +65,7 @@
     <Compile Include="frmPhotoSort.Designer.cs">
       <DependentUpon>frmPhotoSort.cs</DependentUpon>
     </Compile>
+    <Compile Include="GithubSingleFileUpdater.cs" />
     <Compile Include="PhotoInfo.cs" />
     <Compile Include="PhotoSortMgr.cs" />
     <Compile Include="Program.cs" />

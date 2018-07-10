@@ -118,5 +118,10 @@ namespace Fotosort
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //relase test = GithubSingleFileUpdater.getLatestReleaseVersion();
+        }
     }
 }

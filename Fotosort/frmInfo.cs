@@ -15,5 +15,10 @@ namespace Fotosort
         {
             InitializeComponent();
         }
+
+        private void frmInfo_Load(object sender, EventArgs e)
+        {
+            lblVersion.Text = "PhotoSort " + GithubSingleFileUpdater.CurrentVersion;
+        }
     }
 }
