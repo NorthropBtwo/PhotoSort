@@ -6,6 +6,7 @@ This is especially useful for merging pictures taken by different cameras.
 
 Furthermore, it is possible to correct the capture time of the pictures in bulk. 
 
+Download the latest release [here](https://github.com/NorthropBtwo/PhotoSort/releases/latest).
 
 ## License
 
