@@ -1,6 +1,6 @@
 # PhotoSort
 
-PhotoSort is a small C# application which allows to sort photos by capture time. 
+[PhotoSort](https://github.com/NorthropBtwo/PhotoSort/releases/latest) is a small C# application which allows to sort photos by capture time. 
 It sorts the photos by renaming them so that the explorer and all other prgramms read them in the right order.
 This is especially useful for merging pictures taken by different cameras.
 
