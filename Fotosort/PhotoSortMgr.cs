@@ -62,8 +62,15 @@ namespace Fotosort
             }
         }
 
+        public struct ImageHeaderInfo
+        {
+            public string captureDate;
+            public string manufacturer;
+            public string model;
+        }
 
-        public static List<PhotoInfo> GetPhotosFromDirectory(string directory, string filter = ".jpg|.jpeg", BackgroundWorker worker = null, DoWorkEventArgs e = null)
+
+            public static List<PhotoInfo> GetPhotosFromDirectory(string directory, string filter = ".jpg|.jpeg", BackgroundWorker worker = null, DoWorkEventArgs e = null)
         {
             List<PhotoInfo> photos = new List<PhotoInfo>();
 
@@ -119,7 +126,14 @@ namespace Fotosort
         public static string GetCaptureDate(string fullFilename)
         {
 
-            string capDate = "";
+            ImageHeaderInfo headerInfo = GetHeaderInfo(fullFilename);
+            return headerInfo.captureDate;
+        }
+
+        public static ImageHeaderInfo GetHeaderInfo(string fullFilename)
+        {
+
+            ImageHeaderInfo headerInfo = new ImageHeaderInfo();
             Encoding enc = Encoding.Default;
 
             using (Image img = Image.FromFile(fullFilename))
@@ -128,16 +142,20 @@ namespace Fotosort
                 {
                     switch (Info.Id.ToString("X"))
                     {
-                        case "110":
-                            break;
                         case "9003":
-                            capDate = enc.GetString(Info.Value, 0, Info.Len - 1);
+                            headerInfo.captureDate = enc.GetString(Info.Value, 0, Info.Len - 1);
+                            break;
+                        case "10F":
+                            headerInfo.manufacturer = enc.GetString(Info.Value, 0, Info.Len - 1);
+                            break;
+                        case "110":
+                            headerInfo.model = enc.GetString(Info.Value, 0, Info.Len - 1);
                             break;
                     }
                 }
             }
 
-            return capDate;
+            return headerInfo;
         }
 
         public static string ChangeCaptureDate(string fullFilename, LongTimeSpan timeDiff)
