@@ -67,11 +67,13 @@ namespace Fotosort
             public string captureDate;
             public string manufacturer;
             public string model;
+
+            public string FullCameraName { get { return manufacturer + " " + model; } }
         }
 
 
-            public static List<PhotoInfo> GetPhotosFromDirectory(string directory, string filter = ".jpg|.jpeg", BackgroundWorker worker = null, DoWorkEventArgs e = null)
-        {
+            public static List<PhotoInfo> GetPhotosFromDirectory(string directory, string filter = ".jpg|.jpeg", string camerafilter = null, BackgroundWorker worker = null, DoWorkEventArgs e = null)
+            {
             List<PhotoInfo> photos = new List<PhotoInfo>();
 
             DirectoryInfo dirInfo = new DirectoryInfo(directory);
@@ -83,10 +85,13 @@ namespace Fotosort
             {
                 if(ApplyFilter(fileInfo.Name, filter))
                 {
-                    string capDate = GetCaptureDate(fileInfo.FullName);
-                    if(capDate != "")
+                    ImageHeaderInfo headerInfo = GetHeaderInfo(fileInfo.FullName); //ImageHeaderInfo contains capture date of the picture
+                    if (headerInfo.captureDate != "")
                     {
-                        photos.Add(new PhotoInfo(fileInfo, capDate));
+                        if (camerafilter == null || camerafilter == headerInfo.FullCameraName)
+                        {
+                            photos.Add(new PhotoInfo(fileInfo, headerInfo));
+                        }
                     }
                 }
 
@@ -132,33 +137,41 @@ namespace Fotosort
 
         public static ImageHeaderInfo GetHeaderInfo(string fullFilename)
         {
-
-            ImageHeaderInfo headerInfo = new ImageHeaderInfo();
-            Encoding enc = Encoding.Default;
+            ImageHeaderInfo headerInfo;
 
             using (Image img = Image.FromFile(fullFilename))
             {
-                foreach (PropertyItem Info in img.PropertyItems)
+                headerInfo = GetHeaderInfo(img.PropertyItems);
+            }
+
+            return headerInfo;
+        }
+
+        public static ImageHeaderInfo GetHeaderInfo(PropertyItem[] PropertyItems)
+        {
+            Encoding enc = Encoding.Default;
+            ImageHeaderInfo headerInfo = new ImageHeaderInfo();
+
+            foreach (PropertyItem Info in PropertyItems)
+            {
+                switch (Info.Id.ToString("X"))
                 {
-                    switch (Info.Id.ToString("X"))
-                    {
-                        case "9003":
-                            headerInfo.captureDate = enc.GetString(Info.Value, 0, Info.Len - 1);
-                            break;
-                        case "10F":
-                            headerInfo.manufacturer = enc.GetString(Info.Value, 0, Info.Len - 1);
-                            break;
-                        case "110":
-                            headerInfo.model = enc.GetString(Info.Value, 0, Info.Len - 1);
-                            break;
-                    }
+                    case "9003":
+                        headerInfo.captureDate = enc.GetString(Info.Value, 0, Info.Len - 1);
+                        break;
+                    case "10F":
+                        headerInfo.manufacturer = enc.GetString(Info.Value, 0, Info.Len - 1);
+                        break;
+                    case "110":
+                        headerInfo.model = enc.GetString(Info.Value, 0, Info.Len - 1);
+                        break;
                 }
             }
 
             return headerInfo;
         }
 
-        public static string ChangeCaptureDate(string fullFilename, LongTimeSpan timeDiff)
+        public static void ChangeCaptureDateInFile(string fullFilename, LongTimeSpan timeDiff, string camerafilter = null)
         {
             string capDate = "";
             Encoding enc = Encoding.Default;
@@ -169,6 +182,15 @@ namespace Fotosort
             using (MemoryStream stream = new MemoryStream(bytes))
             using (Image img = Image.FromStream(stream))
             {
+                if(camerafilter != null)
+                {
+                    ImageHeaderInfo info = GetHeaderInfo(img.PropertyItems);
+                    if(camerafilter != info.FullCameraName)
+                    {
+                        return;
+                    }
+                }
+
                 foreach (PropertyItem Info in img.PropertyItems)
                 {
                     switch (Info.Id.ToString("X"))
@@ -192,8 +214,6 @@ namespace Fotosort
                 img.Save(fullFilename);
 
             }
-
-            return capDate;
         }
 
 
@@ -238,7 +258,7 @@ namespace Fotosort
         }
 
 
-        public static void ChangeCaptureDate(string directory, LongTimeSpan timeDiff, string filter = ".jpg|.jpeg", BackgroundWorker worker = null, DoWorkEventArgs e = null)
+        public static void ChangeCaptureDate(string directory, LongTimeSpan timeDiff, string filter = ".jpg|.jpeg", string camerafilter = null, BackgroundWorker worker = null, DoWorkEventArgs e = null)
         {
 
             DirectoryInfo dirInfo = new DirectoryInfo(directory);
@@ -250,7 +270,7 @@ namespace Fotosort
             {
                 if (ApplyFilter(fileInfo.Name, filter))
                 {
-                    ChangeCaptureDate(fileInfo.FullName, timeDiff);
+                    ChangeCaptureDateInFile(fileInfo.FullName, timeDiff, camerafilter);
                 }
 
                 progress++;
@@ -303,6 +323,24 @@ namespace Fotosort
             }
 
             return img;
+        }
+
+
+        public static List<string> GetListOfCamersFromDirectory(string directory, string filter = ".jpg|.jpeg", BackgroundWorker worker = null, DoWorkEventArgs e = null)
+        {
+            List<string> cameras = new List<string>();
+            List <PhotoInfo> fileinfos = GetPhotosFromDirectory(directory, filter,null, worker, e);
+
+            foreach(PhotoInfo info in fileinfos)
+            {
+                string fullCamera = info.FullCameraName;
+                if(!cameras.Contains(fullCamera))
+                {
+                    cameras.Add(fullCamera);
+                }
+            }
+
+            return cameras;
         }
 
 

@@ -10,16 +10,24 @@ namespace Fotosort
     {
 
         private FileInfo fileInfo;
-        private string captureDate;
+        //private string captureDate;
+        private PhotoSortMgr.ImageHeaderInfo headerInfo = new PhotoSortMgr.ImageHeaderInfo();
 
         public PhotoInfo(FileInfo fileInfo, string captureDate)
         {
             this.fileInfo = fileInfo;
-            this.captureDate = captureDate;
+            this.headerInfo.captureDate = captureDate;
         }
 
+        public PhotoInfo(FileInfo fileInfo, PhotoSortMgr.ImageHeaderInfo headerInfo)
+        {
+            this.fileInfo = fileInfo;
+            this.headerInfo = headerInfo;
+        }
 
-        public string CaptureDate { get { return captureDate; } }
+        public string FullCameraName { get { return headerInfo.FullCameraName; } }
+
+        public string CaptureDate { get { return headerInfo.captureDate; } }
 
         public string Extension { get { return fileInfo.Extension; } }
 

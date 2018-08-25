@@ -9,17 +9,16 @@ using System.Windows.Forms;
 
 namespace Fotosort
 {
-    public partial class frmInfo : Form
+    public partial class frmInstruction : Form
     {
-        public frmInfo()
+        public frmInstruction()
         {
             InitializeComponent();
         }
 
-        private void frmInfo_Load(object sender, EventArgs e)
+        private void Instructions_Load(object sender, EventArgs e)
         {
-            lblVersion.Text = "PhotoSort " + GithubSingleFileUpdater.CurrentVersion;
-            this.Text = lblVersion.Text;
+
         }
     }
 }

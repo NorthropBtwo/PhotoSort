@@ -18,7 +18,7 @@ namespace Fotosort
 
 
         const string wwwLatestRelease = "https://api.github.com/repos/NorthropBtwo/PhotoSort/releases/latest";
-        public const string CurrentVersion = "v0.0.3-beta";
+        public const string CurrentVersion = "v0.0.4-beta";
 
         public static bool IsUpToDate()
         {

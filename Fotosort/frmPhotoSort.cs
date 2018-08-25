@@ -13,6 +13,14 @@ namespace Fotosort
 {
     public partial class frmPhotoSort : Form
     {
+        public enum BackgroundWork
+        {
+            Sort,
+            AddConstantTime,
+            FromKnownImage,
+            ScanCameras,
+        }
+
         public frmPhotoSort()
         {
             InitializeComponent();
@@ -23,31 +31,36 @@ namespace Fotosort
 
         }
 
+        BackgroundWork backGroundWork;
+        string cameraFilter;
 
-        List<TextBox> sortTextParameters;
-        List<TextBox> addConstantTimeTextParameters;
+
+        List<string> camerasFound = new List<string>();
 
         string selectedFileName;
         DateTime selectedFileCaptureTime;
 
         private void frmFotoSort_Load(object sender, EventArgs e)
         {
-            sortTextParameters = new List<TextBox>() { txtPrefix, txtStartIndex, txtFiler };
-            addConstantTimeTextParameters = new List<TextBox>() { txtAddConstant_Y, txtAddConstant_Mon, txtAddConstant_D, txtAddConstant_h, txtAddConstant_min, txtAddConstant_s ,txtFiler2};
-
-            foreach (var txtBox in sortTextParameters)
-            {
-                txtBox.TextChanged += SetSortActive;
-            }
-            foreach (var txtBox in addConstantTimeTextParameters)
-            {
-                txtBox.TextChanged += SetAddConstantTimeActive;
-            }
-
 
             openFileDialog1.InitialDirectory = Directory.GetCurrentDirectory();
+            cobFilterCamera1.SelectedIndex = 0;
+            cobFilterCamera2.SelectedIndex = 0;
+            cobFilterCamera3.SelectedIndex = 0;
 
-            radSort.Checked = true;
+            foreach (Control control in this.Controls)
+            {
+                Type t = control.GetType();
+                if (control.GetType() == typeof(GroupBox))
+                {
+                    foreach (Control subControl in control.Controls)
+                    {
+                        subControl.Font = control.Font;
+                    }
+                    control.Font = new Font("Arial", 9, FontStyle.Bold);
+                }
+                
+            }
 
             InitUpdate();
         }
@@ -65,15 +78,6 @@ namespace Fotosort
             }
         }
 
-        private void SetSortActive(object sender, EventArgs e)
-        {
-            radSort.Checked = true;
-        }
-
-        private void SetAddConstantTimeActive(object sender, EventArgs e)
-        {
-            radAddConstantTime.Checked = true;
-        }
 
 
         private void cmdstart_Click(object sender, EventArgs e)
@@ -81,10 +85,11 @@ namespace Fotosort
             if (backgroundWorker1.IsBusy != true)
             {
                 this.UseWaitCursor = true;
-                cmdstart.Enabled = false;
-                cmdstart1.Enabled = false;
-                cancel.Enabled = true;
-                cancel1.Enabled = true;
+                cmdStartSort.Enabled = false;
+                cmdStartConstant.Enabled = false;
+                cmdStartByKnown.Enabled = false;
+                cmdCancel.Enabled = true;
+                cmdCancel.Visible = true;
 
                 backgroundWorker1.RunWorkerAsync();
             }
@@ -95,13 +100,13 @@ namespace Fotosort
         {
             backgroundWorker1.ReportProgress(0);
 
-            if (radSort.Checked)
+            if (backGroundWork == BackgroundWork.Sort)
             {
-                List<PhotoInfo> photoInfos = PhotoSortMgr.GetPhotosFromDirectory(Directory.GetCurrentDirectory(), txtFiler.Text, sender as BackgroundWorker, e);
+                List<PhotoInfo> photoInfos = PhotoSortMgr.GetPhotosFromDirectory(Directory.GetCurrentDirectory(), txtFiler.Text, cameraFilter, sender as BackgroundWorker, e);
                 photoInfos.Sort();
                 PhotoSortMgr.Rename(photoInfos, txtPrefix.Text, txtStartIndex.Text, sender as BackgroundWorker, e);
             }
-            else if (radAddConstantTime.Checked)
+            else if (backGroundWork == BackgroundWork.AddConstantTime)
             {
                 PhotoSortMgr.LongTimeSpan lts;
 
@@ -115,16 +120,21 @@ namespace Fotosort
                     return;
                 }
 
-                PhotoSortMgr.ChangeCaptureDate(Directory.GetCurrentDirectory(), lts, txtFiler2.Text, sender as BackgroundWorker, e);
+                PhotoSortMgr.ChangeCaptureDate(Directory.GetCurrentDirectory(), lts, txtFiler2.Text, cameraFilter, sender as BackgroundWorker, e);
             }
-            else if (radKnownImage.Checked)
+            else if (backGroundWork == BackgroundWork.FromKnownImage)
             {
-                TimeSpan difference =  dateTimePicker1.Value.Subtract(selectedFileCaptureTime);
+                TimeSpan difference = dateTimePicker1.Value.Subtract(selectedFileCaptureTime);
                 PhotoSortMgr.LongTimeSpan lts = PhotoSortMgr.LongTimeSpan.FromTimeSpan(difference);
-                selectedFileCaptureTime = dateTimePicker1.Value;
 
-                PhotoSortMgr.ChangeCaptureDate(Directory.GetCurrentDirectory(), lts, txtFiler3.Text, sender as BackgroundWorker, e);
+                PhotoSortMgr.ChangeCaptureDate(Directory.GetCurrentDirectory(), lts, txtFiler3.Text, cameraFilter, sender as BackgroundWorker, e);
             }
+            else if (backGroundWork == BackgroundWork.ScanCameras)
+            {
+                camerasFound = PhotoSortMgr.GetListOfCamersFromDirectory(Directory.GetCurrentDirectory(), txtFiler.Text + "|" + txtFiler2.Text + "|" + txtFiler3.Text, sender as BackgroundWorker, e);
+            }
+
+            backgroundWorker1.ReportProgress(100);
         }
 
 
@@ -136,10 +146,11 @@ namespace Fotosort
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.UseWaitCursor = false;
-            cmdstart.Enabled = true;
-            cmdstart1.Enabled = true;
-            cancel.Enabled = false;
-            cancel1.Enabled = false;
+            Cursor.Position = Cursor.Position; //C# needs this line to correctly update teh WaitCursor
+            cmdStartSort.Enabled = true;
+            cmdStartConstant.Enabled = true;
+            cmdStartByKnown.Enabled = true;
+            cmdCancel.Enabled = false;
             /*
             if (e.Cancelled == true)
             {
@@ -153,6 +164,31 @@ namespace Fotosort
             {
                 labelResult.Text = "Done!";
             }*/
+
+            if (backGroundWork == BackgroundWork.ScanCameras)
+            {
+                cobFilterCamera1.Enabled = true;
+                cobFilterCamera1.Items.Clear();
+                cobFilterCamera1.Items.Add("all");
+                cobFilterCamera1.Items.AddRange(camerasFound.ToArray());
+                cobFilterCamera1.SelectedIndex = 0;
+
+                cobFilterCamera2.Enabled = true;
+                cobFilterCamera2.Items.Clear();
+                cobFilterCamera2.Items.Add("all");
+                cobFilterCamera2.Items.AddRange(camerasFound.ToArray());
+                cobFilterCamera2.SelectedIndex = 0;
+
+                cobFilterCamera3.Enabled = true;
+                cobFilterCamera3.Items.Clear();
+                cobFilterCamera3.Items.Add("all");
+                cobFilterCamera3.Items.AddRange(camerasFound.ToArray());
+                cobFilterCamera3.SelectedIndex = 0;
+            }
+            else if (backGroundWork == BackgroundWork.FromKnownImage)
+            {
+                selectImage(); //reload the selected image
+            }
         }
 
         private void cancel_Click(object sender, EventArgs e)
@@ -163,40 +199,45 @@ namespace Fotosort
             }
         }
 
+        private void selectImage()
+        {
+            DateTime captureTime = DateTime.MinValue;
+
+            try
+            {
+                Image img = PhotoSortMgr.GetImageFromFile(selectedFileName, ref captureTime);
+                if (captureTime != DateTime.MinValue)
+                {
+                    DisplayImage(img);
+                }
+                else
+                {
+                    img.Dispose();
+                }
+
+                selectedFileCaptureTime = captureTime;
+                dateTimePicker1.Value = captureTime;
+            }
+            catch (Exception ex)
+            {
+                selectedFileName = "";
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void cmdSelectImage_Click(object sender, EventArgs e)
         {
             DialogResult result =  openFileDialog1.ShowDialog();
-            DateTime captureTime = DateTime.MinValue;
+            
 
             if (result == DialogResult.OK) // Test result.
             {
                 selectedFileName = openFileDialog1.FileName;
 
-                try
-                {
-                    Image img = PhotoSortMgr.GetImageFromFile(selectedFileName,ref captureTime);
-                    if(captureTime != DateTime.MinValue)
-                    {
-                        DisplayImage(img);
-                    }
-                    else
-                    {
-                        img.Dispose();
-                    }
-
-                    selectedFileCaptureTime = captureTime;
-                    dateTimePicker1.Value = captureTime;
-                    radKnownImage.Checked = true;
-                }
-                catch (Exception ex)
-                {
-                    selectedFileName = "";
-                    MessageBox.Show(ex.Message);
-                }
+                selectImage();
             }
 
         }
-
 
         Image currentlyDisplayed;
 
@@ -253,6 +294,51 @@ namespace Fotosort
             }
 
             Environment.Exit(0);
+        }
+
+        private void cmdSelCam1_Click(object sender, EventArgs e)
+        {
+            backGroundWork = BackgroundWork.ScanCameras;
+            cmdstart_Click(sender, e);
+        }
+
+        private void cmdStartSort_Click(object sender, EventArgs e)
+        {
+            backGroundWork = BackgroundWork.Sort;
+            cameraFilter = getCamerFilter(cobFilterCamera1);
+            cmdstart_Click(sender, e);
+        }
+
+        private void cmdStartConstant_Click(object sender, EventArgs e)
+        {
+            backGroundWork = BackgroundWork.AddConstantTime;
+            cameraFilter = getCamerFilter(cobFilterCamera2);
+            cmdstart_Click(sender, e);
+        }
+
+        private void cmdStartByKnown_Click(object sender, EventArgs e)
+        {
+            backGroundWork = BackgroundWork.FromKnownImage;
+            cameraFilter = getCamerFilter(cobFilterCamera3);
+            cmdstart_Click(sender, e);
+        }
+
+        private string getCamerFilter(ComboBox cob)
+        {
+            if(cob.SelectedItem.ToString() == "all")
+            {
+                return null;
+            }
+            else
+            {
+                return cob.SelectedItem.ToString();
+            }
+        }
+
+        private void toolStripInstruction_Click(object sender, EventArgs e)
+        {
+            frmInstruction instruction = new frmInstruction();
+            instruction.ShowDialog();
         }
     }
 }
