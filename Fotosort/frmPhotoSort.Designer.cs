@@ -60,6 +60,10 @@
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.ToolStripInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.cmdUpdate = new System.Windows.Forms.ToolStripButton();
+            this.toolStripInstruction = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripChangeDir = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLblPhotoDir = new System.Windows.Forms.ToolStripLabel();
             this.cmdSelCam1 = new System.Windows.Forms.Button();
             this.cmdSelCam2 = new System.Windows.Forms.Button();
             this.cmdSelCam3 = new System.Windows.Forms.Button();
@@ -68,15 +72,15 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cmdStartSort = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.cmdStartConstant = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.cmdStartByKnown = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
+            this.cmdStartConstant = new System.Windows.Forms.Button();
             this.cobFilterCamera2 = new System.Windows.Forms.ComboBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label14 = new System.Windows.Forms.Label();
+            this.cmdStartByKnown = new System.Windows.Forms.Button();
             this.cobFilterCamera3 = new System.Windows.Forms.ComboBox();
             this.cmdCancel = new System.Windows.Forms.Button();
-            this.toolStripInstruction = new System.Windows.Forms.ToolStripButton();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.windows7ProgressBar1 = new wyDay.Controls.Windows7ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -309,7 +313,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(617, 38);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(352, 311);
+            this.pictureBox1.Size = new System.Drawing.Size(352, 320);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 32;
             this.pictureBox1.TabStop = false;
@@ -324,7 +328,10 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1,
             this.cmdUpdate,
-            this.toolStripInstruction});
+            this.toolStripInstruction,
+            this.toolStripSeparator1,
+            this.toolStripChangeDir,
+            this.toolStripLblPhotoDir});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.ShowItemToolTips = false;
@@ -363,6 +370,37 @@
             this.cmdUpdate.Size = new System.Drawing.Size(115, 25);
             this.cmdUpdate.Text = "update ready";
             this.cmdUpdate.Click += new System.EventHandler(this.cmdUpdate_Click);
+            // 
+            // toolStripInstruction
+            // 
+            this.toolStripInstruction.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripInstruction.Image = ((System.Drawing.Image)(resources.GetObject("toolStripInstruction.Image")));
+            this.toolStripInstruction.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripInstruction.Name = "toolStripInstruction";
+            this.toolStripInstruction.Size = new System.Drawing.Size(68, 25);
+            this.toolStripInstruction.Text = "Instruction";
+            this.toolStripInstruction.Click += new System.EventHandler(this.toolStripInstruction_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 28);
+            // 
+            // toolStripChangeDir
+            // 
+            this.toolStripChangeDir.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripChangeDir.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripChangeDir.Name = "toolStripChangeDir";
+            this.toolStripChangeDir.Size = new System.Drawing.Size(136, 25);
+            this.toolStripChangeDir.Text = "Change photo location:";
+            this.toolStripChangeDir.Click += new System.EventHandler(this.toolStripChangeDir_Click);
+            // 
+            // toolStripLblPhotoDir
+            // 
+            this.toolStripLblPhotoDir.Name = "toolStripLblPhotoDir";
+            this.toolStripLblPhotoDir.Size = new System.Drawing.Size(100, 25);
+            this.toolStripLblPhotoDir.Text = "working directory";
+            this.toolStripLblPhotoDir.Click += new System.EventHandler(this.toolStripChangeDir_Click);
             // 
             // cmdSelCam1
             // 
@@ -428,7 +466,7 @@
             this.groupBox1.Controls.Add(this.txtFiler);
             this.groupBox1.Controls.Add(this.cmdSelCam1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(25, 31);
+            this.groupBox1.Location = new System.Drawing.Point(25, 40);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(576, 102);
             this.groupBox1.TabIndex = 41;
@@ -465,12 +503,21 @@
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.txtFiler2);
             this.groupBox2.Controls.Add(this.label10);
-            this.groupBox2.Location = new System.Drawing.Point(25, 139);
+            this.groupBox2.Location = new System.Drawing.Point(25, 148);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(576, 102);
             this.groupBox2.TabIndex = 42;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Add constant time span to captured time";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(390, 25);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(67, 13);
+            this.label13.TabIndex = 44;
+            this.label13.Text = "filter camera:";
             // 
             // cmdStartConstant
             // 
@@ -481,42 +528,6 @@
             this.cmdStartConstant.Text = "start";
             this.cmdStartConstant.UseVisualStyleBackColor = true;
             this.cmdStartConstant.Click += new System.EventHandler(this.cmdStartConstant_Click);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.label14);
-            this.groupBox3.Controls.Add(this.cmdStartByKnown);
-            this.groupBox3.Controls.Add(this.cobFilterCamera3);
-            this.groupBox3.Controls.Add(this.dateTimePicker1);
-            this.groupBox3.Controls.Add(this.cmdSelectImage);
-            this.groupBox3.Controls.Add(this.label11);
-            this.groupBox3.Controls.Add(this.txtFiler3);
-            this.groupBox3.Controls.Add(this.cmdSelCam3);
-            this.groupBox3.Location = new System.Drawing.Point(25, 247);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(576, 102);
-            this.groupBox3.TabIndex = 43;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "correct captured time by known image";
-            // 
-            // cmdStartByKnown
-            // 
-            this.cmdStartByKnown.Location = new System.Drawing.Point(17, 66);
-            this.cmdStartByKnown.Name = "cmdStartByKnown";
-            this.cmdStartByKnown.Size = new System.Drawing.Size(128, 23);
-            this.cmdStartByKnown.TabIndex = 44;
-            this.cmdStartByKnown.Text = "start";
-            this.cmdStartByKnown.UseVisualStyleBackColor = true;
-            this.cmdStartByKnown.Click += new System.EventHandler(this.cmdStartByKnown_Click);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(390, 25);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(67, 13);
-            this.label13.TabIndex = 44;
-            this.label13.Text = "filter camera:";
             // 
             // cobFilterCamera2
             // 
@@ -530,6 +541,23 @@
             this.cobFilterCamera2.Size = new System.Drawing.Size(159, 21);
             this.cobFilterCamera2.TabIndex = 43;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label14);
+            this.groupBox3.Controls.Add(this.cmdStartByKnown);
+            this.groupBox3.Controls.Add(this.cobFilterCamera3);
+            this.groupBox3.Controls.Add(this.dateTimePicker1);
+            this.groupBox3.Controls.Add(this.cmdSelectImage);
+            this.groupBox3.Controls.Add(this.label11);
+            this.groupBox3.Controls.Add(this.txtFiler3);
+            this.groupBox3.Controls.Add(this.cmdSelCam3);
+            this.groupBox3.Location = new System.Drawing.Point(25, 256);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(576, 102);
+            this.groupBox3.TabIndex = 43;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "correct captured time by known image";
+            // 
             // label14
             // 
             this.label14.AutoSize = true;
@@ -538,6 +566,16 @@
             this.label14.Size = new System.Drawing.Size(67, 13);
             this.label14.TabIndex = 46;
             this.label14.Text = "filter camera:";
+            // 
+            // cmdStartByKnown
+            // 
+            this.cmdStartByKnown.Location = new System.Drawing.Point(17, 66);
+            this.cmdStartByKnown.Name = "cmdStartByKnown";
+            this.cmdStartByKnown.Size = new System.Drawing.Size(128, 23);
+            this.cmdStartByKnown.TabIndex = 44;
+            this.cmdStartByKnown.Text = "start";
+            this.cmdStartByKnown.UseVisualStyleBackColor = true;
+            this.cmdStartByKnown.Click += new System.EventHandler(this.cmdStartByKnown_Click);
             // 
             // cobFilterCamera3
             // 
@@ -554,7 +592,7 @@
             // cmdCancel
             // 
             this.cmdCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.cmdCancel.Location = new System.Drawing.Point(444, 362);
+            this.cmdCancel.Location = new System.Drawing.Point(444, 371);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(107, 40);
             this.cmdCancel.TabIndex = 47;
@@ -563,22 +601,12 @@
             this.cmdCancel.Visible = false;
             this.cmdCancel.Click += new System.EventHandler(this.cancel_Click);
             // 
-            // toolStripInstruction
-            // 
-            this.toolStripInstruction.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripInstruction.Image = ((System.Drawing.Image)(resources.GetObject("toolStripInstruction.Image")));
-            this.toolStripInstruction.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripInstruction.Name = "toolStripInstruction";
-            this.toolStripInstruction.Size = new System.Drawing.Size(68, 25);
-            this.toolStripInstruction.Text = "Instruction";
-            this.toolStripInstruction.Click += new System.EventHandler(this.toolStripInstruction_Click);
-            // 
             // windows7ProgressBar1
             // 
             this.windows7ProgressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.windows7ProgressBar1.ContainerControl = this;
-            this.windows7ProgressBar1.Location = new System.Drawing.Point(13, 408);
+            this.windows7ProgressBar1.Location = new System.Drawing.Point(13, 417);
             this.windows7ProgressBar1.Name = "windows7ProgressBar1";
             this.windows7ProgressBar1.ShowInTaskbar = true;
             this.windows7ProgressBar1.Size = new System.Drawing.Size(964, 23);
@@ -588,7 +616,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(989, 441);
+            this.ClientSize = new System.Drawing.Size(989, 450);
             this.Controls.Add(this.cmdCancel);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -596,6 +624,7 @@
             this.Controls.Add(this.windows7ProgressBar1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.pictureBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmPhotoSort";
             this.Text = "PhotoSort";
             this.Load += new System.EventHandler(this.frmFotoSort_Load);
@@ -663,5 +692,9 @@
         private System.Windows.Forms.ComboBox cobFilterCamera3;
         private System.Windows.Forms.Button cmdCancel;
         private System.Windows.Forms.ToolStripButton toolStripInstruction;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton toolStripChangeDir;
+        private System.Windows.Forms.ToolStripLabel toolStripLblPhotoDir;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }

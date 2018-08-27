@@ -33,7 +33,7 @@ namespace Fotosort
 
         BackgroundWork backGroundWork;
         string cameraFilter;
-
+        private string photoDirectory;
 
         List<string> camerasFound = new List<string>();
 
@@ -61,6 +61,8 @@ namespace Fotosort
                 }
                 
             }
+
+            setPhotoDirectory(Directory.GetCurrentDirectory());
 
             InitUpdate();
         }
@@ -102,7 +104,7 @@ namespace Fotosort
 
             if (backGroundWork == BackgroundWork.Sort)
             {
-                List<PhotoInfo> photoInfos = PhotoSortMgr.GetPhotosFromDirectory(Directory.GetCurrentDirectory(), txtFiler.Text, cameraFilter, sender as BackgroundWorker, e);
+                List<PhotoInfo> photoInfos = PhotoSortMgr.GetPhotosFromDirectory(photoDirectory, txtFiler.Text, cameraFilter, sender as BackgroundWorker, e);
                 photoInfos.Sort();
                 PhotoSortMgr.Rename(photoInfos, txtPrefix.Text, txtStartIndex.Text, sender as BackgroundWorker, e);
             }
@@ -120,18 +122,18 @@ namespace Fotosort
                     return;
                 }
 
-                PhotoSortMgr.ChangeCaptureDate(Directory.GetCurrentDirectory(), lts, txtFiler2.Text, cameraFilter, sender as BackgroundWorker, e);
+                PhotoSortMgr.ChangeCaptureDate(photoDirectory, lts, txtFiler2.Text, cameraFilter, sender as BackgroundWorker, e);
             }
             else if (backGroundWork == BackgroundWork.FromKnownImage)
             {
                 TimeSpan difference = dateTimePicker1.Value.Subtract(selectedFileCaptureTime);
                 PhotoSortMgr.LongTimeSpan lts = PhotoSortMgr.LongTimeSpan.FromTimeSpan(difference);
 
-                PhotoSortMgr.ChangeCaptureDate(Directory.GetCurrentDirectory(), lts, txtFiler3.Text, cameraFilter, sender as BackgroundWorker, e);
+                PhotoSortMgr.ChangeCaptureDate(photoDirectory, lts, txtFiler3.Text, cameraFilter, sender as BackgroundWorker, e);
             }
             else if (backGroundWork == BackgroundWork.ScanCameras)
             {
-                camerasFound = PhotoSortMgr.GetListOfCamersFromDirectory(Directory.GetCurrentDirectory(), txtFiler.Text + "|" + txtFiler2.Text + "|" + txtFiler3.Text, sender as BackgroundWorker, e);
+                camerasFound = PhotoSortMgr.GetListOfCamersFromDirectory(photoDirectory, txtFiler.Text + "|" + txtFiler2.Text + "|" + txtFiler3.Text, sender as BackgroundWorker, e);
             }
 
             backgroundWorker1.ReportProgress(100);
@@ -339,6 +341,23 @@ namespace Fotosort
         {
             frmInstruction instruction = new frmInstruction();
             instruction.ShowDialog();
+        }
+
+
+        
+        private void setPhotoDirectory(string newDir)
+        {
+            photoDirectory = newDir;
+            toolStripLblPhotoDir.Text = newDir;
+            folderBrowserDialog1.SelectedPath = newDir;
+        }
+
+        private void toolStripChangeDir_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                setPhotoDirectory(folderBrowserDialog1.SelectedPath);
+            }
         }
     }
 }
