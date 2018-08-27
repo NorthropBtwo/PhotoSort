@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,12 @@ namespace Fotosort
         {
             lblVersion.Text = "PhotoSort " + GithubSingleFileUpdater.CurrentVersion;
             this.Text = lblVersion.Text;
+        }
+
+
+        private void linkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start((sender as LinkLabel).Tag as string);
         }
     }
 }
