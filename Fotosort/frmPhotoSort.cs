@@ -359,5 +359,13 @@ namespace Fotosort
                 setPhotoDirectory(folderBrowserDialog1.SelectedPath);
             }
         }
+
+
+        private void cmdShowModifyCaptureTime_Click(object sender, EventArgs e)
+        {
+            cmdShowModifyCaptureTime.Visible = false;
+            grpbox_addTime.Visible = true;
+            grpbox_setTimeByKnown.Visible = true;
+        }
     }
 }
