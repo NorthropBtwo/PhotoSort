@@ -10,6 +10,10 @@ Download the latest release [here](https://github.com/NorthropBtwo/PhotoSort/rel
 
 [![Image of Yaktocat](https://github.com/NorthropBtwo/PhotoSort/blob/master/preview.png)](https://github.com/NorthropBtwo/PhotoSort/releases/latest).
 
+[Tutorial on how to use PhotoSort](https://youtu.be/aV25VAwup9k)
+
+[![Image of Yaktocat](https://github.com/NorthropBtwo/PhotoSort/blob/master/thumbnail.png)](https://youtu.be/aV25VAwup9k).
+
 ## License
 
 See the [LICENSE](LICENSE) file for license rights and limitations (MIT).
