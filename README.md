@@ -8,6 +8,8 @@ Furthermore, it is possible to correct the capture time of the pictures in bulk.
 
 Download the latest release [here](https://github.com/NorthropBtwo/PhotoSort/releases/latest).
 
+[![Image of Yaktocat](https://github.com/NorthropBtwo/PhotoSort/blob/master/preview.png)](https://github.com/NorthropBtwo/PhotoSort/releases/latest).
+
 ## License
 
 See the [LICENSE](LICENSE) file for license rights and limitations (MIT).
